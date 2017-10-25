@@ -71,4 +71,5 @@ public class I18nImpl implements I18n {
   public String rounded(double number, int digits) {
     return String.format(userSpecificLocale, "%." + digits + "f", number);
   }
+
 }
