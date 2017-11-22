@@ -17,7 +17,6 @@ import com.faforever.client.i18n.I18n;
 import com.faforever.client.player.Player;
 import com.faforever.client.player.Player.NameRecord;
 import com.faforever.client.player.UsernameChangeController;
-import com.faforever.client.preferences.PreferencesService;
 import com.faforever.client.remote.FafService;
 import com.faforever.client.stats.StatisticsService;
 import com.faforever.client.theme.UiService;
@@ -143,7 +142,7 @@ public class UserInfoWindowController implements Controller<Node> {
   @Inject
   public UserInfoWindowController(StatisticsService statisticsService, CountryFlagService countryFlagService,
                                   AchievementService achievementService, EventService eventService,
-                                  PreferencesService preferencesService, I18n i18n, UiService uiService, FafService fafService, TimeService timeService) {
+                                  I18n i18n, UiService uiService, FafService fafService, TimeService timeService) {
     this.statisticsService = statisticsService;
     this.countryFlagService = countryFlagService;
     this.achievementService = achievementService;

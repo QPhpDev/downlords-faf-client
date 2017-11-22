@@ -46,6 +46,4 @@ public interface PlayerService {
   ReadOnlyObjectProperty<Player> currentPlayerProperty();
 
   CompletableFuture<List<Player>> getPlayersByIds(Collection<Integer> playerId);
-
-  void changeUsername(String text);
 }

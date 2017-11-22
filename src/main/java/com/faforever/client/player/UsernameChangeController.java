@@ -1,6 +1,12 @@
 package com.faforever.client.player;
 
 import com.faforever.client.fx.Controller;
+import com.faforever.client.i18n.I18n;
+import com.faforever.client.notification.ImmediateNotification;
+import com.faforever.client.notification.NotificationService;
+import com.faforever.client.notification.ReportAction;
+import com.faforever.client.notification.Severity;
+import com.faforever.client.reporting.ReportingService;
 import com.faforever.client.user.UserService;
 import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -14,11 +20,15 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import java.util.Collections;
 
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class UsernameChangeController implements Controller<Node> {
   private final UserService userService;
+  private final NotificationService notificationService;
+  private final I18n i18n;
+  private final ReportingService reportingService;
   public TextField usernameField;
   public VBox root;
   public Button changeButton;
@@ -26,8 +36,11 @@ public class UsernameChangeController implements Controller<Node> {
   private ReadOnlyStringProperty displayPlayer;
 
   @Inject
-  public UsernameChangeController(UserService userService) {
+  public UsernameChangeController(UserService userService, NotificationService notificationService, I18n i18n, ReportingService reportingService) {
     this.userService = userService;
+    this.notificationService = notificationService;
+    this.i18n = i18n;
+    this.reportingService = reportingService;
   }
 
   @Override
@@ -56,7 +69,14 @@ public class UsernameChangeController implements Controller<Node> {
 
   public void onUsernameChangeRequested(ActionEvent actionEvent) {
     userService.changeUsername(usernameField.getText())
-        .thenAccept(aVoid -> callback.run());
+        .thenAccept(aVoid -> callback.run())
+        .exceptionally(throwable -> {
+              notificationService.addNotification(new ImmediateNotification(i18n.get("errorTitle"),
+                  i18n.get("settings.account.username.error", throwable.getMessage()), Severity.ERROR, Collections.singletonList(new ReportAction(i18n, reportingService, throwable))));
+
+              return null;
+            }
+        );
   }
 
   public void registerOnNameChangedCallback(Runnable callback) {
