@@ -40,6 +40,7 @@
                         <CheckBox fx:id="hideFoeCheckBox" mnemonicParsing="false" text="%settings.chat.hideFoe"/>
                         <Label text="%settings.chat.timeFormat"/>
                         <ComboBox fx:id="timeComboBox"/>
+                        <ComboBox fx:id="chatComboBox"/>
                     </children>
                 </VBox>
             </content>

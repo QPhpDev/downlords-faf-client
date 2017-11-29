@@ -78,6 +78,7 @@
                                         <CheckBox fx:id="hideFoeCheckBox" mnemonicParsing="false" text="%settings.chat.hideFoe" />
                                         <Label text="%settings.chat.timeFormat"/>
                                         <ComboBox fx:id="timeComboBox" onAction="#onTimeFormatSelected"/>
+                                        <ComboBox fx:id="chatComboBox" onAction="#onChatFormatSelected"/>
                                     </children>
                                 </VBox>
                             </children>
